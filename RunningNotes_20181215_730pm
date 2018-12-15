@@ -1,0 +1,73 @@
+
+
+
+
+Agenda :
+
+AWS Lab & AWS Account
+
+AWS Regions & AZ's
+
+Connecting AWS Cloud using Various Ways:
+
+	1. AWS Management Console (GUI)
+	2. AWS Programatic Access (CLI)
+	3. SDK Access (API)
+
+
+Admin User  Account : root/admin/super user (GUI+CLI,SDK's)
+
+Normal User Account : keshav user (GUI+CLI,SDK's)
+
+AWS VPC : 
+
+	1. 20 Regions & 60 AZ's
+		
+		Region:
+			1. VPC (Default VPC)
+			2. 4 more VPC's 
+
+VPC : Virtual Private Cloud 
+
+
+
+
+www.sbionline.com
+
+Website by kk
+
+Written with Programming language : Java
+
+Database : mysql
+
+Client Side Scripting : HTML, CSS, JS, AJ etc..
+
+Server Side Scripting : Java, Python
+
+1. Webserver or Application server
+
+Operating System : Windows/Linux/Unix 
+
+Windows/Linux/Unix  --- Webserver/Application --- index.html 
+
+
+Purchase Your Domain : keshavkummari.com
+
+Godaddy : keshavkummari.com (1000 INR)
+
+
+User(KK) ----> Godaddy ----> IANA(IPV4 & IPV6) [IPV4-5-Classes Public & Private Ipaddress]
+
+
+
+#!/bin/bash
+cd /opt/
+yum install wget* curl* vim* unzip* -y
+yum update -y
+wget https://www.free-css.com/assets/files/free-css-templates/download/page231/bizexpress-v1.0.1.zip
+unzip *.zip
+cd Biz*
+yum install http* --skip-broken -y
+mv * /var/www/html/
+service httpd start
+# systemct start httpd.service
