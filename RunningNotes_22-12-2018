@@ -1,0 +1,312 @@
+#--------------------------------------------------------#
+AWS SYSOps :
+#--------------------------------------------------------#
+1. Introduction
+
+2. Monitoring & Metrics
+
+3. High Availability
+
+4. Analysis
+
+5. Deployment and Provisioning
+
+6. Data Management
+
+7. Security
+
+8. Networking : VPC - IGW, RTB, SUBNETS, NATGATEWAY, NACL, SECURITY GROUPS
+
+	- Launch a EC2 instance of Linux
+	- Launch a EC2 instance of Windows
+
+	- 3rd Party Tools : 1. Putty, 2. Puttygen, 3. RDP, 4. ATOM, 5. CMDER etc..
+
+
+#--------------------------------------------------------#
+
+Name of the Client : KK
+Client Domain Name : www.keshavkummari.com
+
+
+1. Developer : HTML
+2. DevOps(AWS SysOps Engineer) : Create a DevOps CI/CD Pipeline on AWS Cloud 
+
+	1. Architect the Website 
+	2. DevOps CI/CD Pipeline
+	3. Deploy 
+	4. Monitor
+	5. Analysis
+	6. Security
+	7. Networking
+	8. Data Management
+
+#--------------------------------------------------------#
+STEP-1 : Purchase a Domain from Domain Register :
+
+Domain Name: keshavkummari.com
+
+NS : godaddy NS
+NS : godaddy NS
+
+STEP-2 : Host a Website on AWS Cloud :
+
+AWS >> VPC : It's components : IGW, RTB, SUBNETS, NATGATEWAY, NACL, SECURITY GROUPS,
+
+	1. Public Subnet : EC2 instance : Bastion Server/Proxy Server/Jumpbox
+	2. Private Subnet : Deploy a Website 
+
+
+#--------------------------------------------------------#
+AWS :
+
+Networking :
+	1. VPC
+	2. CloudFront
+	3. Route53
+
+1. Route53 :
+
+DNS : 
+
+.com     : keshavkummari.com 230.10.30.11  >>  godaddydns.abc.com >> privateip(10.0.0.2) >> keshavkummari.com >> AWS NS records ns-1115.awsdns-11.org. , ns-599.awsdns-10.net. , ns-303.awsdns-37.com. , ns-1972.awsdns-54.co.uk.
+
+.net
+.in
+.co.in
+.org
+
+
+230.10.30.11 >> Private IPaddress : 
+
+Hosting :  Route53 : 1. Simple 
+					 2. Failover
+					 3. Geolocation
+					 4. Latency
+					 5. Weighted
+
+
+Route53 : Hosted Zones  (keshavkummari.com)
+	
+	1. SOA
+	2. NS
+	3. A   > EC2 instance(ipaddress) or S3 or ELB or ElasticBeanstack or CloudFront
+
+	 
+
+AWS NameServer :
+
+ns-1115.awsdns-11.org
+ns-599.awsdns-10.net
+ns-303.awsdns-37.com
+ns-1972.awsdns-54.co.uk
+
+EC2 Instance : 
+
+1. Webserver(Apache httpd)  : 1. User & Group
+							  2. /var/www/html/
+							  3. Daemon/Service 
+
+
+
+
+Html : index.html
+
+#--------------------------------------------------------#
+
+
+Client Name : Simplilearn
+
+Staff :
+
+1. Dev Team  
+2. QA Team
+3. Production Team
+
+On-Premises :
+
+Stages :
+
+1. dev  : Dev Team
+
+2. tst  : QA Team
+
+3. acc  : DevOps/Operations
+
+4. prd  : DevOps/Operations
+
+
+Cloud Engineer : 
+
+4 AWS Account : 
+
+https://www.aws.amazon.com/
+
+
+https://slearn-dev.signin.aws.amazon.com/console
+
+https://slearn-tst.signin.aws.amazon.com/console
+
+https://slearn-acc.signin.aws.amazon.com/console
+
+https://slearn-prd.signin.aws.amazon.com/console
+
+
+Unix/Linux/MacOS :
+
+
+1. Basic Commands :
+
+
+Reading Files in Unix/Linux/MacOS :
+
+# cat <file_name>  = Read complete file
+
+# head <file_name> = Top 10 lines
+
+# head -20 <file_name> 
+
+# tail <file_name> = Last 10 lines
+
+# tail -20 <file_name>
+
+# more <file_name>
+
+# less <file_name>
+
+
+Editors in Linux :
+
+# vi <file_name>
+
+# vim <file_name>
+
+# nano <file_name>
+
+Navigation :
+
+# cd /opt
+
+# cd ../
+
+# cd ../..
+
+# cd -
+
+# cd ~
+
+
+Creating Files :
+
+# cat > file_name
+
+# cat >> file_name
+
+# touch <file_name>
+
+
+Copy or Move or Rename files in Linux/Unix:
+
+## File:
+# cp -pv <source/file_name or dir_name> <destination/file_name or dir_name> 
+
+p = including permissions of file or dir
+v = verbose
+
+
+## Dir:
+# cp -pvr <source/file_name or dir_name> <destination/file_name or dir_name> 
+
+## File or Dir:
+# mv <source/file_name or dir_name> <destination/file_name or dir_name> 
+
+
+Other Basic/Regular useful commands:
+
+# top   = task manager
+
+# ps -aux | grep tomcat
+
+# vmstat  : V M
+
+# netstat : Network input and output
+
+# iostat : incoming and outgoing stats
+
+# free  : HDD, Ram 
+
+# ifconfig : ipaddress
+
+
+# who : List of users who logged in
+
+# uname -a : To check OS, Distribution, Arch, Licencing
+
+# wget or # curl : To download a file/software from internet/remote location
+
+# unzip : To unzip a file
+
+# tar : To untar a directory
+
+# df -Th : Display file system
+
+# du -sh : to Check Disk Usage 
+
+
+User Management :
+
+
+# useradd <user_name>
+
+# usermod <user_name>
+
+# userdel <user_name>
+
+Group Managment :
+
+# groupadd <group_name>
+
+# groupmod <group_name>
+
+# groupdel <group_name>
+
+
+File / Dir Permissions : 
+
+# chmod <file_name> or dir_name
+
+Absolute :
+Symbalic : - , + , = ugo
+0	= 	-
+1	= 	x
+2	=	w
+3	=   1+2 x+w = 3
+4	=   r
+5	=   1+4 x+r = 5
+6	=   2+4 w+r = 6
+7	=   1+2+4 x+w+r = 7
+
+User :   1+2+4 = 7
+
+Group :  r - - = 4+0+0 = 4
+
+Other :  - - - = 
+
+# chmod 777 file_name
+
+# chmod ugo=777 file_name
+
+
+
+#----------------------------------------------#
+1. VPC : IGW, RTB, SUBNETS, NATGATEWAY, NACL, SECURITY GROUPS, 
+
+	1. Bastion Server on Public Network, 
+	2. EC2 instance on Public and Install Apache Httpd server on it
+	3. Purchase a domain name from Vendor godaddy
+	4. Route53 Hosted Zone
+	5. Update NS part of domain registor i.e. godaddy
+	6. Create A record and map with EC2 instance
+	7. Validate by going to Browser and cross check your custom website
+
+#----------------------------------------------#
