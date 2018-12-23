@@ -1,0 +1,482 @@
+
+Code URL :
+
+https://www.free-css.com/assets/files/free-css-templates/download/page231/bizexpress-v1.0.1.zip
+
+
+Domain Name : keshavkummari.com
+
+Domain Registered : godaddy.com
+
+Hosting : AWS 
+
+AWS >> Networking : VPC
+
+
+STEP-1 : Go to AWS Mgmt Console 
+
+Region : Mumbai (ap-south-1)
+
+AZ's/Subnets : 2 AZ's i.e. 1. ap-south-1a & 2. ap-south-1b
+
+
+CLI : 
+
+Access Key id : 
+Sc	A Ke id   : 
+
+
+
+STEP-1 : VPC Creation:
+
+$ aws ec2 create-vpc --cidr-block 10.0.0.0/16
+{
+    "Vpc": {
+        "CidrBlock": "10.0.0.0/16",
+        "DhcpOptionsId": "dopt-e8122f80",
+        "State": "pending",
+        "VpcId": "vpc-0850d110eb8f97439",
+        "InstanceTenancy": "default",
+        "Ipv6CidrBlockAssociationSet": [],
+        "CidrBlockAssociationSet": [
+            {
+                "AssociationId": "vpc-cidr-assoc-035a3a28ab627cb0d",
+                "CidrBlock": "10.0.0.0/16",
+                "CidrBlockState": {
+                    "State": "associated"
+                }
+            }
+        ],
+        "IsDefault": false,
+        "Tags": []
+    }
+}
+
+
+
+STEP-2 : IGW 
+
+$ aws ec2 create-internet-gateway
+{
+    "InternetGateway": {
+        "Attachments": [],
+        "InternetGatewayId": "igw-07854bbe99d063a31",
+        "Tags": []
+    }
+}
+$ 
+
+
+STEP-3 : Attach IGW to VPC
+
+$ aws ec2 attach-internet-gateway --vpc-id "vpc-0850d110eb8f97439" --internet-gateway-id "igw-07854bbe99d063a31"
+$ 
+
+
+STEP-4 : Create a Route Table:
+
+RTB-1 :
+
+$ aws ec2 create-route-table --vpc-id "vpc-0850d110eb8f97439" 
+{
+    "RouteTable": {
+        "Associations": [],
+        "PropagatingVgws": [],
+        "RouteTableId": "rtb-0e1e20a237edd756d",
+        "Routes": [
+            {
+                "DestinationCidrBlock": "10.0.0.0/16",
+                "GatewayId": "local",
+                "Origin": "CreateRouteTable",
+                "State": "active"
+            }
+        ],
+        "Tags": [],
+        "VpcId": "vpc-0850d110eb8f97439"
+    }
+}
+$ 
+
+$ aws ec2 create-route-table --vpc-id "vpc-0850d110eb8f97439"
+{
+    "RouteTable": {
+        "Associations": [],
+        "PropagatingVgws": [],
+        "RouteTableId": "rtb-089339d87ebc0238c",
+        "Routes": [
+            {
+                "DestinationCidrBlock": "10.0.0.0/16",
+                "GatewayId": "local",
+                "Origin": "CreateRouteTable",
+                "State": "active"
+            }
+        ],
+        "Tags": [],
+        "VpcId": "vpc-0850d110eb8f97439"
+    }
+}
+$ 
+
+
+STEP-5 : Create a route to IGW:
+
+$ aws ec2 create-route --route-table-id "rtb-0e1e20a237edd756d" --destination-cidr-block 0.0.0.0/0 --gateway-id "igw-07854bbe99d063a31"
+{
+    "Return": true
+}
+$ 
+
+
+STEP-6 : Create 6 Subnets 
+
+
+$ aws ec2 create-subnet --vpc-id "vpc-0850d110eb8f97439" --cidr-block 10.0.1.0/24 --availability-zone "ap-south-1a"
+{
+    "Subnet": {
+        "AvailabilityZone": "ap-south-1a",
+        "AvailableIpAddressCount": 251,
+        "CidrBlock": "10.0.1.0/24",
+        "DefaultForAz": false,
+        "MapPublicIpOnLaunch": false,
+        "State": "pending",
+        "SubnetId": "subnet-07c4ce3522c7b5889",
+        "VpcId": "vpc-0850d110eb8f97439",
+        "AssignIpv6AddressOnCreation": false,
+        "Ipv6CidrBlockAssociationSet": []
+    }
+}
+$ 
+
+
+$ aws ec2 create-subnet --vpc-id "vpc-0850d110eb8f97439" --cidr-block 10.0.2.0/24 --availability-zone "ap-south-1b"
+{
+    "Subnet": {
+        "AvailabilityZone": "ap-south-1b",
+        "AvailableIpAddressCount": 251,
+        "CidrBlock": "10.0.2.0/24",
+        "DefaultForAz": false,
+        "MapPublicIpOnLaunch": false,
+        "State": "pending",
+        "SubnetId": "subnet-0ecf93877ec7d382d",
+        "VpcId": "vpc-0850d110eb8f97439",
+        "AssignIpv6AddressOnCreation": false,
+        "Ipv6CidrBlockAssociationSet": []
+    }
+}
+$ aws ec2 create-subnet --vpc-id "vpc-0850d110eb8f97439" --cidr-block 10.0.3.0/24 --availability-zone "ap-south-1a"
+{
+    "Subnet": {
+        "AvailabilityZone": "ap-south-1a",
+        "AvailableIpAddressCount": 251,
+        "CidrBlock": "10.0.3.0/24",
+        "DefaultForAz": false,
+        "MapPublicIpOnLaunch": false,
+        "State": "pending",
+        "SubnetId": "subnet-0ae55ea6c64368c24",
+        "VpcId": "vpc-0850d110eb8f97439",
+        "AssignIpv6AddressOnCreation": false,
+        "Ipv6CidrBlockAssociationSet": []
+    }
+}
+$ 
+$ aws ec2 create-subnet --vpc-id "vpc-0850d110eb8f97439" --cidr-block 10.0.4.0/24 --availability-zone "ap-south-1b"
+{
+    "Subnet": {
+        "AvailabilityZone": "ap-south-1b",
+        "AvailableIpAddressCount": 251,
+        "CidrBlock": "10.0.4.0/24",
+        "DefaultForAz": false,
+        "MapPublicIpOnLaunch": false,
+        "State": "pending",
+        "SubnetId": "subnet-0f26e0848a1bce24c",
+        "VpcId": "vpc-0850d110eb8f97439",
+        "AssignIpv6AddressOnCreation": false,
+        "Ipv6CidrBlockAssociationSet": []
+    }
+}
+$ aws ec2 create-subnet --vpc-id "vpc-0850d110eb8f97439" --cidr-block 10.0.5.0/24 --availability-zone "ap-south-1a"
+{
+    "Subnet": {
+        "AvailabilityZone": "ap-south-1a",
+        "AvailableIpAddressCount": 251,
+        "CidrBlock": "10.0.5.0/24",
+        "DefaultForAz": false,
+        "MapPublicIpOnLaunch": false,
+        "State": "pending",
+        "SubnetId": "subnet-0c40a59a9b735085f",
+        "VpcId": "vpc-0850d110eb8f97439",
+        "AssignIpv6AddressOnCreation": false,
+        "Ipv6CidrBlockAssociationSet": []
+    }
+}
+$ aws ec2 create-subnet --vpc-id "vpc-0850d110eb8f97439" --cidr-block 10.0.6.0/24 --availability-zone "ap-south-1b"
+{
+    "Subnet": {
+        "AvailabilityZone": "ap-south-1b",
+        "AvailableIpAddressCount": 251,
+        "CidrBlock": "10.0.6.0/24",
+        "DefaultForAz": false,
+        "MapPublicIpOnLaunch": false,
+        "State": "pending",
+        "SubnetId": "subnet-0bd5d7db8785cfeea",
+        "VpcId": "vpc-0850d110eb8f97439",
+        "AssignIpv6AddressOnCreation": false,
+        "Ipv6CidrBlockAssociationSet": []
+    }
+}
+$ 
+
+
+STEP-7 : Enable Public Ipaddress on 2 Subnets
+
+
+$ aws ec2 modify-subnet-attribute --subnet-id "subnet-07c4ce3522c7b5889" --map-public-ip-on-launch
+$ 
+$ aws ec2 modify-subnet-attribute --subnet-id "subnet-0ecf93877ec7d382d" --map-public-ip-on-launch
+
+
+STEP-8 : Adding Public Subnets to Public Route Table:
+
+$ aws ec2 associate-route-table --subnet-id "subnet-07c4ce3522c7b5889" --route-table-id "rtb-0e1e20a237edd756d"
+{
+    "AssociationId": "rtbassoc-0b413f319acfa9e2a"
+}
+$ 
+$ aws ec2 associate-route-table --subnet-id "subnet-0ecf93877ec7d382d" --route-table-id "rtb-0e1e20a237edd756d"
+{
+    "AssociationId": "rtbassoc-000f66bf2c657e7c1"
+}
+$ 
+
+
+STEP-9 : Adding Private Subnets to Private Route Table :
+
+$ aws ec2 associate-route-table --subnet-id "subnet-0ae55ea6c64368c24" --route-table-id "rtb-089339d87ebc0238c"
+{
+    "AssociationId": "rtbassoc-0b9201ea29b13c752"
+}
+$ aws ec2 associate-route-table --subnet-id "subnet-0f26e0848a1bce24c" --route-table-id "rtb-089339d87ebc0238c"
+{
+    "AssociationId": "rtbassoc-05060a6a1f5ea4fa4"
+}
+$ aws ec2 associate-route-table --subnet-id "subnet-0c40a59a9b735085f" --route-table-id "rtb-089339d87ebc0238c"
+{
+    "AssociationId": "rtbassoc-095a6c99df5fd1350"
+}
+$ aws ec2 associate-route-table --subnet-id "subnet-0bd5d7db8785cfeea" --route-table-id "rtb-089339d87ebc0238c"
+{
+    "AssociationId": "rtbassoc-0c6757f84937ee241"
+}
+$ 
+
+
+STEP-10 : Create a NAT Gateway part of Public Subnet-1:
+
+$ aws ec2 create-nat-gateway --subnet-id "subnet-07c4ce3522c7b5889" --allocation-id eipalloc-0cc25a29022a1589e
+{
+    "NatGateway": {
+        "CreateTime": "2018-12-23T16:59:25.000Z",
+        "NatGatewayAddresses": [
+            {
+                "AllocationId": "eipalloc-0cc25a29022a1589e"
+            }
+        ],
+        "NatGatewayId": "nat-0d8e3bd8d9b57de86",
+        "State": "pending",
+        "SubnetId": "subnet-07c4ce3522c7b5889",
+        "VpcId": "vpc-0850d110eb8f97439"
+    }
+}
+$ 
+
+
+STEP-11 : Allow Rotue to NAT GATEWAY on Private Route Table:
+
+$ aws ec2 create-route --route-table-id "rtb-089339d87ebc0238c" --destination-cidr-block 0.0.0.0/0 --nat-gateway-id "nat-0d8e3bd8d9b57de86"
+{
+    "Return": true
+}
+$ 
+
+
+STEP-12: Create a NACL:
+
+$ aws ec2 create-network-acl --vpc-id "vpc-0850d110eb8f97439"
+{
+    "NetworkAcl": {
+        "Associations": [],
+        "Entries": [
+            {
+                "CidrBlock": "0.0.0.0/0",
+                "Egress": true,
+                "IcmpTypeCode": {},
+                "PortRange": {},
+                "Protocol": "-1",
+                "RuleAction": "deny",
+                "RuleNumber": 32767
+            },
+            {
+                "CidrBlock": "0.0.0.0/0",
+                "Egress": false,
+                "IcmpTypeCode": {},
+                "PortRange": {},
+                "Protocol": "-1",
+                "RuleAction": "deny",
+                "RuleNumber": 32767
+            }
+        ],
+        "IsDefault": false,
+        "NetworkAclId": "acl-02b9c116a0a484830",
+        "Tags": [],
+        "VpcId": "vpc-0850d110eb8f97439"
+    }
+}
+$ 
+
+
+STEP-13: Allowing Ports on NACL:
+
+Inbound:
+$ aws ec2 create-network-acl-entry --network-acl-id "acl-02b9c116a0a484830" --ingress --rule-number 110 --protocol tcp --port-range From=22,To=22 --cidr-block 0.0.0.0/0 --rule-action allow
+
+$ aws ec2 create-network-acl-entry --network-acl-id "acl-02b9c116a0a484830" --ingress --rule-number 100 --protocol tcp --port-range From=80,To=80 --cidr-block 0.0.0.0/0 --rule-action allow
+ 
+$ aws ec2 create-network-acl-entry --network-acl-id "acl-02b9c116a0a484830" --ingress --rule-number 120 --protocol udp --port-range From=53,To=53 --cidr-block 0.0.0.0/0 --rule-action allow
+
+
+Outbound: 
+$ aws ec2 create-network-acl-entry --network-acl-id "acl-02b9c116a0a484830" --egress --rule-number 110 --protocol tcp --port-range From=22,To=22 --cidr-block 0.0.0.0/0 --rule-action allow 
+
+aws ec2 create-network-acl-entry --network-acl-id "acl-02b9c116a0a484830" --egress --rule-number 100 --protocol tcp --port-range From=80,To=80 --cidr-block 0.0.0.0/0 --rule-action allow
+
+aws ec2 create-network-acl-entry --network-acl-id "acl-02b9c116a0a484830" --egress --rule-number 120 --protocol udp --port-range From=53,To=53 --cidr-block 0.0.0.0/0 --rule-action allow
+
+STEP-14 : Security Groups for EC2 instancess:
+
+$ aws ec2 create-security-group --group-name "sg_cli_test_01" --description "AWS CLI Test" --vpc-id "vpc-0850d110eb8f97439"
+{
+    "GroupId": "sg-040e03345a99fbca0"
+}
+$ 
+
+Updated inbound rule on Port 22 and Port 80:
+
+$ aws ec2 authorize-security-group-ingress --group-id "sg-040e03345a99fbca0" --protocol tcp --port 22 --cidr 0.0.0.0/0
+$ 
+$ aws ec2 authorize-security-group-ingress --group-id "sg-040e03345a99fbca0" --protocol tcp --port 80 --cidr 0.0.0.0/0
+
+
+STEP-15 : Launch a Linux Server part of Public Subnet-2(Bastion Server)
+
+$ aws ec2 run-instances --image-id "ami-0ad42f4f66f6c1cc9" --count 1 --instance-type t2.micro --key-name aws_cli_test --security-group-ids "sg-040e03345a99fbca0" --subnet-id "subnet-0ecf93877ec7d382d" --tag-specifications 'ResourceType=instance,Tags=[{Key=ToDoAdminJob,Value=BastionServer}]'
+{
+    "Groups": [],
+    "Instances": [
+        {
+            "AmiLaunchIndex": 0,
+            "ImageId": "ami-0ad42f4f66f6c1cc9",
+            "InstanceId": "i-011b3341f29fd67cd",
+            "InstanceType": "t2.micro",
+            "KeyName": "aws_cli_test",
+            "LaunchTime": "2018-12-23T17:32:13.000Z",
+            "Monitoring": {
+                "State": "disabled"
+            },
+            "Placement": {
+                "AvailabilityZone": "ap-south-1b",
+                "GroupName": "",
+                "Tenancy": "default"
+            },
+            "PrivateDnsName": "ip-10-0-2-113.ap-south-1.compute.internal",
+            "PrivateIpAddress": "10.0.2.113",
+            "ProductCodes": [],
+            "PublicDnsName": "",
+            "State": {
+                "Code": 0,
+                "Name": "pending"
+            },
+            "StateTransitionReason": "",
+            "SubnetId": "subnet-0ecf93877ec7d382d",
+            "VpcId": "vpc-0850d110eb8f97439",
+            "Architecture": "x86_64",
+            "BlockDeviceMappings": [],
+            "ClientToken": "",
+            "EbsOptimized": false,
+            "Hypervisor": "xen",
+            "NetworkInterfaces": [
+                {
+                    "Attachment": {
+                        "AttachTime": "2018-12-23T17:32:13.000Z",
+                        "AttachmentId": "eni-attach-098107f2a0af111e4",
+                        "DeleteOnTermination": true,
+                        "DeviceIndex": 0,
+                        "Status": "attaching"
+                    },
+                    "Description": "",
+                    "Groups": [
+                        {
+                            "GroupName": "sg_cli_test_01",
+                            "GroupId": "sg-040e03345a99fbca0"
+                        }
+                    ],
+                    "Ipv6Addresses": [],
+                    "MacAddress": "0a:c9:a5:da:c4:d6",
+                    "NetworkInterfaceId": "eni-01ad7adad7cceb6bd",
+                    "OwnerId": "126211257110",
+                    "PrivateIpAddress": "10.0.2.113",
+                    "PrivateIpAddresses": [
+                        {
+                            "Primary": true,
+                            "PrivateIpAddress": "10.0.2.113"
+                        }
+                    ],
+                    "SourceDestCheck": true,
+                    "Status": "in-use",
+                    "SubnetId": "subnet-0ecf93877ec7d382d",
+                    "VpcId": "vpc-0850d110eb8f97439"
+                }
+            ],
+            "RootDeviceName": "/dev/xvda",
+            "RootDeviceType": "ebs",
+            "SecurityGroups": [
+                {
+                    "GroupName": "sg_cli_test_01",
+                    "GroupId": "sg-040e03345a99fbca0"
+                }
+            ],
+            "SourceDestCheck": true,
+            "StateReason": {
+                "Code": "pending",
+                "Message": "pending"
+            },
+            "Tags": [
+                {
+                    "Key": "ToDoAdminJob",
+                    "Value": "BastionServer"
+                }
+            ],
+            "VirtualizationType": "hvm",
+            "CpuOptions": {
+                "CoreCount": 1,
+                "ThreadsPerCore": 1
+            }
+        }
+    ],
+    "OwnerId": "126211257110",
+    "ReservationId": "r-0192bdfdbd1ae27b0"
+}
+$ 
+
+#---------------------------------------------------------------------#
+
+
+$ aws ec2 run-instances --image-id "ami-0ad42f4f66f6c1cc9" --count 1 --instance-type t2.micro --key-name aws_cli_test --security-group-ids "sg-040e03345a99fbca0" --subnet-id "subnet-0ae55ea6c64368c24" --tag-specifications 'ResourceType=instance,Tags=[{Key=Server,Value=WebServer}]'
+
+
+wget https://www.free-css.com/assets/files/free-css-templates/download/page231/bizexpress-v1.0.1.zip
+unzip *.zip
+cd Biz*
+yum install http* --skip-broken -y
+mv * /var/www/html/
+
+
