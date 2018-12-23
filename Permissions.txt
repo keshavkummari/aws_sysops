@@ -1,0 +1,67 @@
+***************************************************************
+File and Directory Permissions 
+(read, write, execute,chmod,chown,chgrp)
+
+******************************************************
+File and directory permission is in the form of a 3×3 structure.
+  1. Three permissions (read, write and execute)
+  2. Three types of users (owner, groups and others).
+
+The 9 characters from 2nd to 10th position represents the permissions for the 3 types of users.
+-rw-r--r—. 1 root root 0 Feb 17 23:08 abc.txt
+
+******************************************************
+Three file permissions:
+read: permitted to read the contents of file.
+write: permitted to write to the file.
+execute: permitted to execute the file as a program/script.
+
+Three directory permissions:
+read: permitted to read the contents of directory ( view files and sub-directories in that directory ).
+write: permitted to write in to the directory. ( create files and sub-directories in that directory )
+execute: permitted to enter into that directory.
+
+Numeric values for the read, write and execute permissions:
+read 4
+write 2
+execute 1
+******************************************************
+Change File and Directory Permissions Using Chmod Command
+
+To change file or directory permissions, you use the chmod (change mode) command. 
+There are two ways to use chmod: 
+symbolic mode and absolute mode. 
+
+Symbolic Mode:  
+# chmod u=rwx   # chmod g=rwx    
+# chmod o=rwx   # chmod u-r   
+# chmod g-w     # chmod o-x  
+# chmod u+rwx   #chmod o+r 
+******************************************************
+Absolute mode of permissions:
+
+First number is for user
+Second number is for group
+Third number is for others
+
+For example, give read, write ( 4+2 = 6 ) to user and read ( 4 ) to group and others.
+
+[root@localhost media]# chmod 644 abc.txt
+
+[root@localhost media]# ls -l abc.txt
+-rw-r--r--. 1 root root 0 Feb 17 23:08 abc.txt
+******************************************************
+Changing Owners and Groups
+
+Two commands are available to change the owner and the group of files -
+
+chown - The chown command stands for "change owner" and is used to change the owner of a file.
+[root@localhost media]# chown sridhar-1 abc.txt
+-rw-r--r--. 1 sridhar-1 root    0 Feb 17 23:08 abc.txt
+
+chgrp - The chgrp command stands for "change group" and is used to change the group of a file.
+[root@localhost media]# groupadd linux-admin
+
+[root@localhost media]# chgrp linux-admin abc.txt
+-rw-r--r--. 1 sridhar-1 linux-admin    0 Feb 17 23:08 abc.txt
+******************************************************

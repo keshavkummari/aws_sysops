@@ -1,0 +1,78 @@
+Group Administration
+****************************************************
+Creating a Group
+
+Syntax: 
+# groupadd <groupname>
+Or
+# groupadd <option> <argument> <groupname>
+
+Options:
+-g  = Group ID
+
+Create a group sales with default options
+# groupadd sales  (/etc/group/)
+
+Create a group mktg whose group id (GID) is 850
+# groupadd –g 850 mktg
+
+****************************************************
+Modify the Group Properties
+
+Syntax: groupmod <option> <argument> <groupname>
+
+Options:
+-g = Group ID
+-o = Override
+-n = Group name
+
+Change the GID of the group sales to 900
+# groupmod –g 900 sales
+
+Change the group name of the group mktg to marketing
+# groupmod  -n <new-Group_name>  <old_group_name>
+# groupmod –n marketing mktg
+****************************************************
+Delete a Group
+
+Syntax: groupdel <group_name>
+
+Delete the group sales
+# groupdel sales
+
+Group Membership
+Syntax: gpasswd <option> <arguments> <group name>
+
+Options: 
+-M	        = Add multiple users to  a group
+-A		= Add a group administrator
+-a		= Add a single user to a group
+-d		= Delete a user from a group
+
+Example:  Add multiple users (jack,abiel,enrique,osteen) to the group marketing
+# useradd  jack 
+# gpasswd –M jack,abiel,osteen marketing
+
+Add the user jessi as the administrator for the group marketing
+# useradd jessi
+# gpasswd –A jessi marketing    (/etc/group & /etc/gshadow)
+
+Add a user ubert  to the group marketing
+# useradd ubert
+# gpasswd –a ubert marketing
+
+Delete the user jack from the group marketing
+# gpasswd –d  jack marketing
+****************************************************
+Create a user along with it group membership
+
+Create a user james with primary group as HR and a member of the finance group.
+# groupadd hr
+# groupadd finance
+# useradd –g hr –G finance james
+
+To check user details: (/etc/passwd & /etc/group)
+
+Add/modify/delete users from and groups using a graphical tool
+# system-config-users &
+****************************************************

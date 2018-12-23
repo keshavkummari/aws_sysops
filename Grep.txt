@@ -1,0 +1,32 @@
+GREP (Global Regular Expression Printer) 
+C o m m a n d l i n e t e x t s e a r c h u t i l i t y
+
+$ grep options ‘pattern’ filename
+
+$ grep 'abc' filename <shows lines where ‘abc’ is present>
+
+$ grep –v 'abc' filename <shows lines other than ‘abc’>
+$ grep –c 'abc' filename <counts the lines having ‘abc’>
+
+$ grep –n 'abc' filename <along with lines shows line no. also>
+
+$ grep –i 'abc' filename <ignores case and searches the pattern specified>
+
+$ grep –H 'abc' filename <print the filename for each match>
+
+^ beginning of line
+
+$ ls | grep '^a' 
+
+$ end of line
+
+$ ls | grep 't$' 
+
+^abc$ - exactly matching pattern abc
+
+^$ - empty line (no starting and no ending)
+
+* replaces zero or more occurrences of previous character
+
+$ ls | grep 'ab*c'
+

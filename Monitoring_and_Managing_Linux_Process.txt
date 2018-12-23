@@ -1,0 +1,90 @@
+Nice and Renice:
+----------------
+
+Every running process in Unix has a priority assigned to it.
+
+We can change the process priority using nice and renice utility.
+
+Nice command will launch a process with an user defined scheduling priority. 
+
+Renice command will modify the scheduling priority of a running process.
+
+Linux Kernel schedules the process and allocates CPU time accordingly for each of them. 
+
+But, when one of your process requires higher priority to get more CPU time, you can use “nice” and “renice” command.
+
+The process scheduling priority range is from -20 to 19.
+
+A nice value of -20 represents highest priority, and a nice value of 19 represent least priority for a process.
+
+By default when a process starts, it gets the default priority of “0”.
+
+Display Nice Value of a ProcessCommand # ps The “NI” column in the ps command output indicates the current nice value (i.e priority) of a process.
+
+-----------------------------------------------------------------
+To check the default NI value of a process:
+# ps -fl -C 'sleep'
+
+Launch a Program with Less Priority:
+# nice -10 sleep 1000  [Note: Push the job in bg( ctrl+z) ]
+# ps -fl -C 'sleep'
+F S UID        PID  PPID  C PRI  NI ADDR SZ WCHAN  STIME TTY          TIME CMD
+0 T root        5892  5267  0  90  10 -  1016 -      10:12 pts/1    00:00:00 sleep 1000
+
+Note: Remember that -10 in the above command sets the priority of a process to 10. The – in nice command stands for the hypen, which we use to pass options to the command.
+So, to pass nice value of 5, you’ll say -5. To pass nice value of 6, you’ll say -6.
+
+-----------------------------------------------------------------
+
+Launch a Program with High Priority
+# nice --10 sleep 1000  [Note: Push the job in bg( ctrl+z) ]
+# ps -fl -C "sleep 1000"
+F S UID        PID  PPID  C PRI  NI ADDR SZ WCHAN  STIME TTY          TIME CMD
+4 T root         5973  5267  0  70  -10 -  1016 -      10:17 pts/1    00:00:00 sleep 1000
+
+Note: So, to pass nice value of -10, you’ll add two hyphens in front of 10. To pass nice value of -6, you’ll add two hyphens in front of 6.
+
+Note: Normal users are not allowed to launch a program with a higher priority. Only root user is allowed to launch a program with high priority.
+As a regular user, if you increase the priority, you’ll get the following error message from nice command.
+# nice --10 sleep 1000 nice: cannot set niceness: Permission denied
+-----------------------------------------------------------------
+Change the Priority with option -n
+Increase the priority:
+# nice -n -5 sleep 1000 [Note: Push the job in bg( ctrl+z) ]
+# ps -fl -C "sleep 1000“
+F S UID        PID  PPID  C PRI  NI ADDR SZ WCHAN  STIME TTY          TIME CMD
+4 T root      6057  5267  0  75  -5 -  1016 -      10:26 pts/1    00:00:00 sleep 1000
+
+Decrease the priority:
+# nice -n 5 sleep 1000 [Note: Push the job in bg( ctrl+z) ]
+
+# ps -fl -C "sleep 1000“
+F S UID        PID  PPID  C PRI  NI ADDR SZ WCHAN  STIME TTY          TIME CMD
+4 T root      6057  5267  0  75  5 -  1016 -      10:26 pts/1    00:00:00 sleep 1000
+-----------------------------------------------------------------
+Change the Priority of a Running Process
+The priority of an already running process can be changed using renice command.
+
+[root@masterdns ~]# ps -fl -C "sleep 1000"
+F S UID        PID  PPID  C PRI  NI ADDR SZ WCHAN  STIME TTY          TIME CMD
+4 T root      6057  5267  0  75  -5 -  1016 -      10:26 pts/1    00:00:00 sleep 1000
+
+[root@masterdns ~]# renice -n -19 -p 6057
+6057: old priority -5, new priority -19
+
+[root@masterdns ~]# ps -fl -C "sleep 1000"
+F S UID        PID  PPID  C PRI  NI ADDR SZ WCHAN  STIME TTY          TIME CMD
+4 T root      6057  5267  0  61 -19 -  1016 -      10:26 pts/1    00:00:00 sleep 1000
+-----------------------------------------------------------------
+Change the Priority of All Processes that Belongs to a Group:
+
+Using -g option you can modify the priority of all processes that belongs to a group.
+
+# renice -n 5 –g fortunera
+
+Change the Priority of All Processes Owned by User:
+
+Renice allows to alter the priority of all the processes owned by a specific users.
+
+# renice -n 5 -u enrique
+-----------------------------------------------------------------

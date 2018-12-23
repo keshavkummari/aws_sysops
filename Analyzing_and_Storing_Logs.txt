@@ -1,0 +1,150 @@
+10. Analyzing and Storing Logs:
+*******************************
+
+System Logging:
+
+Processes and the operating system kernel need to be able to record a log of events that happen.
+
+These logs can be useful for auditing the system and troubleshooting problems.
+
+By convention, the “/var/log” directory is where these logs are persistently stored.
+
+A standard logging system based on the systlog protocol is built into RHEL. 
+
+Many programs use this system to record events and organize them into log files.
+
+In RHEL syslog messages are handled by two services, 1. systemd-journald & 2. rsyslog.
+
+The system-journald daemon provides an improved log management service that collects messages from the kernel, the early of the boot process, standard output and error of daemons as they start up and run and syslog.
+
+
+It writes these messages to a structured journal of events that, by default, does not persist between reboots.
+
+This allows syslog messages and events which are missed by syslog to be collected in one central database.
+
+The syslog messages are also forwarded by systemd-journald to rsyslog for further processing.
+
+The “/var/log” directory holds various system and service-specific log files maintained by rsyslog.
+
+*********************************************************
+Analyze syslogs:
+
+
+To read logs:
+# cat /var/log/secure
+
+To read Continues logs:
+# tailf /var/log/messages
+
+Send a syslog message with Logger:
+# logger -p local7.notice "Log entry created on serverX“
+
+Now, cross check in “/var/log/secure” & “/var/log/messages”:
+# tail /var/log/secure
+
+# tail /var/log/messages
+
+# echo "*.debug /var/log/messages-debug" > /etc/rsyslog.d/debug.conf
+
+# ls -l /etc/rsyslog.d/debug.conf
+-rw-r--r--. 1 root root 32 Jun 19 10:26 /etc/rsyslog.d/debug.conf
+
+# cat /etc/rsyslog.d/debug.conf
+*.debug /var/log/messages-debug
+
+# systemctl restart rsyslog
+# tailf /var/log/messages-debug
+
+Open other terminal and use logger:
+# logger -p user.debug "Debug message Test"
+
+*********************************************************
+Finding events with journalctl
+The systemd journal is stored in “/run/log” by default and it’s contents are cleared after a reboot.
+
+The “journalctl” command shows the full system journal.
+# journalctl  (All logs)
+# journalctl -n (Default last 10 lines)
+# journalctl -n 5 (Last 5 logs)
+
+Using priority: 
+
+Priority levels are 
+1. debug, 2. info, 3. notice, 4. warning, 5. err, 6. crit, 7. alert & 8. emerg”.
+
+# journalctl -p err
+
+*********************************************************
+# journalctl -f (Last 10 lines and continues to output to new logs)
+# journalctl --since today
+# journalctl --since yesterday
+# journalctl --since tomorrow
+
+# Syntax : yyyy-mm-dd hh:mm:ss
+# journalctl --since "2016-06-18 20:30:00" --until "2016-06-19 10:57:10"
+
+To check the full-structured entry items with all fields:
+# journalctl -o verbose
+
+To check logs of a specific service:
+# journalctl _SYSTEMD_UNIT=systemd-journald.service
+
+
+To check with the Process id:
+# journalctl _PID=1
+
+To check with the user id:
+# journalctl _UID=81
+
+To check with the priority:
+# journalctl -p warning
+
+To check from a specific time:
+# journalctl --since 9:05:00 --until 9:10:00
+
+To check with a specific service:
+# journalctl --since 9:00:00 _SYSTEMD_UNIT="sshd.service"
+
+To check boot logs:
+# journalctl -b
+*********************************************************
+
+Store the system journal Permanently:
+
+By default, the systemd journal is kept in “/run/log/journal”, which means it is cleared when the system reboots.
+
+The journal is a new mechanism in RHEL-7 and for most installations, a detailed journal that starts with the last boot is sufficient.
+
+If we save the journal logs in “/var/log/journal” so that we can refer historic data.
+But, journal has a built-in log rotation mechanism that will trigger monthly. 
+
+In addition, by default, the journal will not be allowed to get larger than 10% of the 
+file system it is on, or leave less than 15% of the file system free.
+These values can be turned in “/etc/systemd/journald.conf” 
+and the current limits on the size of the journal are logged when the system-journald process starts.
+
+# mkdir -p /var/log/journal
+# chmod 2755 /var/log/journal/
+# chown root:systemd-journal /var/log/journal
+# kill -USER1 systemd-journald
+
+*********************************************************
+
+Maintaining Accurate Time:
+
+Correct synchronized time is very important for log file analysis across multiple systems.
+
+The NTP(Network Time Protocol) is a standard way for machines to provide and obtain correct time information on the internet.
+
+# timedatectl
+# timedatectl list-timezones
+# timedatectl set-timezone America/Phoenix
+# timedatectl set-time 9:00:00 ( “YYYY-MM-DD hh:,=mm:ss)
+# timedatectl set-ntp true
+Config file: /etc/chrony.conf
+# systemctl restart chronyd
+# chronyc sources -v
+
+*********************************************************
+		By - Keshav Kummari
+*********************************************************
