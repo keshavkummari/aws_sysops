@@ -1,0 +1,171 @@
+Unit-8  Controlling Services & Daemons:
+
+Systemd is an init system and system manager that is widely becoming the new standard for Linux machines. 
+While there are considerable opinions about whether systemd is an improvement over the traditional SysV init systems it is replacing, the majority of distributions plan to adopt it or have already done so.
+systemd is a system and service manager for Linux operating systems.
+When run as first process on boot (as PID 1), it acts as init system that brings up and maintains user space services.
+
+
+# The “systemctl status name” command replaces the “service name status” command used in previous versions of RHEL.
+
+Syntax of <7 versions:
+# service service_name action
+or
+# /etc/init.d/<service_name> action
+
+# service mysqld start/stop/restart/status
+----------------------------------------------------------
+In 7:
+# systemctl action service_name.service
+
+# systemctl status/stop/start/restart mariadb.service
+
+**********************************************************
+# Query the state of all units to verify a system startup:
+[root@rhel ~]# systemctl 
+
+# To check all service units:
+[root@rhel ~]# systemctl --type=service
+
+# To check specific service status:
+ [root@rhel ~]# systemctl status rhnsd.service -l
+
+# Enable or Active the unit at boot time:
+[root@rhel ~]# systemctl is-active sshd
+active
+[root@rhel ~]# systemctl is-enabled sshd
+enabled
+**********************************************************
+
+# To Disable or Enable a unit at Boot level:
+# systemctl disable sshd.service
+rm '/etc/systemd/system/multi-user.target.wants/sshd.service‘
+
+# systemctl enable sshd.service
+ln -s '/usr/lib/systemd/system/sshd.service' '/etc/systemd/system/multi-user.target.wants/sshd.service‘
+
+# To show all installed unit files use 'systemctl list-unit-files‘
+# systemctl list-unit-files  
+Or 
+# systemctl list-unit-files --type=service
+
+# systemctl list-unit-files | grep enabled
+# systemctl list-unit-files | grep disabled
+# systemctl list-unit-files | grep static
+
+
+**********************************************************
+# systemctl list-units --type=service
+# systemctl list-units --type=service | grep 'running’  (exited, failed)
+
+# To view only failed services:
+# systemctl --failed --type=service
+
+List running services:
+# systemctl -t service --state=running
+# systemctl -t service --state=stopped
+# systemctl -t service --state=failed
+
+List all services:
+systemctl -at service 
+ls /etc/systemd/system/*.service 
+ls /usr/lib/systemd/system/*.service
+
+**********************************************************
+List all services : (RHEL-7)
+# systemctl -at service 
+# ls /etc/systemd/system/*.service 
+# ls /usr/lib/systemd/system/*.service
+
+RHEL-6:
+# chkconfig --list 
+# ls /etc/init.d/
+
+Start/stop service: (RHEL-7)
+# systemctl start name.service 
+# systemctl stop name.service
+
+RHEL-6:
+# service name start 
+# service name stop
+**********************************************************
+List running services:
+
+RHEL-6:
+# service --status-all
+
+# service mysqld status
+or
+# /etc/init.d/mysqld status
+
+RHEL-7:
+# systemctl -t service --state=active
+Enable/disable service:
+
+RHEL-6:
+# chkconfig name on 
+# chkconfig name off
+
+RHEL-7:
+# systemctl enable name.service 
+# systemctl disable name.service
+
+**********************************************************
+View service status
+RHEL-6:
+# service name status
+RHEL-7:
+# systemctl status name.service
+Check if service is enabled
+RHEL-6:
+# chkconfig name --list
+RHEL-7:
+# systemctl is-enabled name
+
+**********************************************************
+Create new service file or modify configuration
+
+RHEL-6:
+# chkconfig –add (# chkconfig --add bluetooth)
+
+RHEL-7:
+# systemctl daemon-reload 
+# /etc/systemd/system/*.service
+
+**********************************************************
+RHEL-6:
+# runlevel  or 	# who –r
+
+RHEL-7:
+# systemctl get-default  or  	# who –r
+
+Change run level/target
+RHEL-6:
+# /etc/inittab init run_level
+
+**********************************************************
+RHEL-7:
+# systemctl isolate name.target
+# systemctl set-default
+# systemctl list-units -t target
+# systemctl enable graphical.target –force
+
+**********************************************************
+RHEL-6:
+# /etc/rsyslog.conf
+RHEL-7:
+# /etc/rsyslog.conf 
+
+# systemctl status systemd-journald.service
+
+View logs
+RHEL-6:
+# /var/log
+
+RHEL-7:
+# /var/log 
+# journalctl
+
+**********************************************************
+		By - Keshav Kummari
+**********************************************************

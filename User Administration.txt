@@ -1,0 +1,112 @@
+***************************************************************
+Creating an user
+
+Syntax :  useradd <username>
+or 
+useradd <option> <argument> <username>
+
+Options:
+-u  = UID     			
+-g  = Primary Group name or GID
+-o  = Override
+-G  = Secondary Group
+-c  = Comment
+-d = Home directory
+-s  = Shell
+***************************************************************
+Creating a user Enrique with default options
+# useradd enrique
+
+Check the user details in /etc/passwd
+# grep enrique /etc/passwd
+
+Create a user abiel whose user id is 599
+# useradd –u 599 abiel
+
+Create a user joseph with a comment “Manager”
+# useradd –c manager joseph
+
+***************************************************************
+Create a user paul whose home directory ‘/opt’
+# useradd –d /opt/paul paul
+
+Create a user james whose shell is ‘c shell’
+# useradd –s /bin/csh james
+
+Create a user peter with the following parameters:
+User id (UID)  = 900
+Comment        = VP
+Home directory = /mnt
+Shell          = c shell
+
+# useradd –u 900 –c vip –d /mnt –s /bin/csh peter
+
+***************************************************************
+To set the password for a user:
+# passwd <username>
+
+To check the encrypted password
+# grep jack /etc/shadow
+Or 
+# tail -5 /etc/shadow
+Or 
+#more /etc/shadow
+***************************************************************
+To modify the properties of a user
+
+-u = UID
+-g = Primary Group Name or GID
+-o = Override
+-G = Secondary Group
+-c  = Comment
+
+-d = Home directory
+-s = shell
+-l  = Login Name
+-L = Lock the account
+-U = Unlock
+
+***************************************************************
+Change the user id of Jack to 750
+# usermod –u 750 jack
+
+To change the home directory and shell of jack
+# usermod –d /media –s /bin/csh jack
+
+Lock the user Jack
+# usermod –L jack
+
+Unlock the user Jack
+# usermod –U jack
+
+To change the login name of user jack to james
+# usermod –l <new_name> <old_name>
+# usermod –l james jack
+***************************************************************
+Delete a user
+
+Syntax: userdel <options> <username>
+
+Options: 
+-r  = Recursively(Along with the home directory and mailbox)
+
+Delete the user jack
+# userdel jack
+
+Delete the user jack along with his home directory and mailbox
+# userdel –r jack
+
+***************************************************************
+To view the details of a user from all the database files
+
+To view the details of a user jack
+# grep jack /etc/passwd /etc/shadow
+To view the uid and gid of a user
+# id jack
+
+To change the password parameters
+Syntax: chage <username>
+# chage -l jack
+# chage jack
+
+***************************************************************

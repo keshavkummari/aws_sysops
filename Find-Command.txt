@@ -1,0 +1,119 @@
+1. Find Files Using Name in Current Directory
+# find . -name test.txt
+
+2. Find Files Under Home Directory
+# find /home -name test.txt
+
+3. Find Files Using Name and Ignoring Case
+# find /home -iname test.txt
+
+4. Find Directories Using Name
+# find / -type d -name dir1
+
+5. Find PHP/pl/sh Files Using Name
+# find . -type f -name test.php
+
+6. Find all PHP Files in Directory
+# find . -type f -name "*.php"
+
+Find Files Based on their Permissions:
+**************************************
+
+7. Find Files With 777 Permissions
+# find . -type f -perm 0777 -print
+
+8. Find Files Without 777 Permissions
+# find / -type f ! -perm 777
+
+9. Find Read Only Files
+# find / -perm /u=r
+
+10. Find Executable Files
+# find / -perm /a=x
+
+Find Files with 777 Permissions and Chmod to 644
+# find / -type f -perm 0777 -print -exec chmod 644 {} \;
+
+Find Directories with 777 Permissions and Chmod to 755
+# find / -type d -perm 777 -print -exec chmod 755 {} \;
+
+Find and remove single File
+# find . -type f -name "redhat.txt" -exec rm -f {} \;
+
+Find and remove Multiple File
+# find . -type f -name "*.txt" -exec rm -f {} \;
+
+19. Find all Empty Files
+To file all empty files under certain path.
+# find /tmp -type f -empty
+
+20. Find all Empty Directories
+To file all empty directories under certain path.
+# find /tmp -type d -empty
+
+21. File all Hidden Files
+To find all hidden files, use below command.
+# find /tmp -type f -name ".*"
+
+Search Files Based On Owners and Groups:
+****************************************
+
+22. Find Single File Based on User
+To find all or single file called redhat.txt under / root directory of owner root.
+# find / -user root -name redhat.txt
+
+23. Find all Files Based on User
+To find all files that belongs to user redhat under /home directory.
+# find /home -user redhat
+
+24. Find all Files Based on Group
+To find all files that belongs to group Developer under /home directory.
+# find /home -group developer
+
+25. Find Particular Files of User
+To find all .txt files of user redhat under /home directory.
+# find /home -user redhat -iname "*.txt"
+
+Find Files and Directories Based on Date and Time:
+*************************************************
+
+26. Find Last 50 Days Modified Files
+To find all the files which are modified 50 days back.
+# find / -mtime 50
+
+27. Find Last 50 Days Accessed Files
+To find all the files which are accessed 50 days back.
+# find / -atime 50
+
+28. Find Last 50-100 Days Modified Files
+To find all the files which are modified more than 50 days back and less than 100 days.
+# find / -mtime +50 –mtime -100
+
+29. Find Changed Files in Last 1 Hour
+To find all the files which are changed in last 1 hour.
+# find / -cmin -60
+
+30. Find Modified Files in Last 1 Hour
+To find all the files which are modified in last 1 hour.
+# find / -mmin -60
+
+31. Find Accessed Files in Last 1 Hour
+To find all the files which are accessed in last 1 hour.
+# find / -amin -60
+Part V – Find Files and Directories Based on Size
+
+32. Find 50MB Files
+To find all 50MB files, use.
+# find / -size 50M
+
+33. Find Size between 50MB – 100MB
+To find all the files which are greater than 50MB and less than 100MB.
+# find / -size +50M -size -100M
+
+34. Find and Delete 100MB Files
+To find all 100MB files and delete them using one single command.
+# find / -size +100M -exec rm -rf {} \;
+
+35. Find Specific Files and Delete
+Find all .mp3 files with more than 10MB and delete them using one single command.
+# find / -type f -name *.mp3 -size +10M -exec rm {} \;

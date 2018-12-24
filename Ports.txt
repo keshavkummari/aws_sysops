@@ -1,0 +1,65 @@
+Well known ports
+
+20 – FTP Data (For transferring FTP data)
+
+21 – FTP Control (For starting FTP connection)
+
+22 – SSH (For secure remote administration which uses SSL to encrypt the transmission)
+
+23 – Telnet (For insecure remote administration)
+
+25 – SMTP (Mail Transfer Agent for e-mail server such as SEND mail)
+
+53 – DNS (Special service which uses both TCP and UDP)
+
+67 – Bootp
+
+68 – DHCP
+
+69 – TFTP (Trivial file transfer protocol uses udp protocol for connection less transmission of data)
+
+80 – HTTP/WWW(Apache)
+
+88 – Kerberos
+
+110 – POP3 (Mail delivery Agent)
+
+123 – NTP (Network time protocol used for time syncing uses UDP protocol)
+
+137 – NetBIOS (nmbd)
+
+139 – SMB-Samba (smbd)
+
+143 – IMAP
+
+161 – SNMP (For network monitoring)
+
+389 – LDAP (For centralized administration)
+
+443 – HTTPS (HTTP+SSL for secure web access)
+
+514 – Syslogd (udp port)
+
+636 – ldaps (both ctp and udp)
+
+873 – rsync
+
+989 – FTPS-data
+
+990 – FTPS
+
+993 – IMAPS
+
+1194 – openVPN
+
+1812 – RADIUS
+
+995 – POP3s
+
+2049 – NFS (nfsd, rpc.nfsd, rpc, portmap)
+
+2401 – CVS server
+
+3306 – MySql
+
+3690 – SVN
