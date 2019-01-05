@@ -1,0 +1,234 @@
+*****************************************************
+1. GadFly
+2. mSQL
+3. MySQL   [Old versions of linux i.e. 4.x / 5.x / 6.x ]
+4. PostgreSQL
+5. Microsoft SQL Server 2000
+6. Informix
+7. Interbase
+8. Oracle
+9. Sybase
+10. mariadb  [>= 7.x ]
+*****************************************************
+
+STEP-1: Install mariadb:
+
+*******[ Centos or Redhat Versions : 5 & 6]************************
+STEP-1:
+
+# yum install mysql* -y
+
+STEP-2:
+# service mysqld status (start or stop)
+
+# From 7.x version :
+# systemctl start mariadb.service
+
+STEP-3:
+
+# mysql_secure_installation
+
+Enter current password for root (enter for none): dont give any passwd here just hit enter
+Set root password? [Y/n] Y
+********
+********
+Remove anonymous users? [Y/n]Y
+Disallow root login remotely? [Y/n]Y
+Remove test database and access to it? [Y/n]Y
+Reload privilege tables now? [Y/n]Y
+Thanks for using MariaDB!!!!!!!!!!!!!!!
+
+# Connect the database from  putty/terminal :
+
+# mysql -uroot -predhat
+or
+# mysql -u root -p
+
+******* [ Centos or Redhat Versions: 7 ]******************
+# yum install mariadb* -y
+
+# systemctl start mariadb.service
+
+# systemctl enable mariadb.service
+
+# systemctl status mariadb.service
+
+#------------------------------------------------#
+# firewall-cmd --permanent --add-service=mysql
+# firewall-cmd --list-all
+# firewall-cmd --reload
+# firewall-cmd --list-all
+#------------------------------------------------#
+
+To set the root user password:
+# mysql_secure_installation
+
+Enter current password for root (enter for none): dont give any passwd here just hit enter
+Set root password? [Y/n] Y
+********
+********
+Remove anonymous users? [Y/n]Y
+Disallow root login remotely? [Y/n]Y
+Remove test database and access to it? [Y/n]Y
+Reload privilege tables now? [Y/n]Y
+Thanks for using MariaDB!!!!!!!!!!!!!!!
+
+# mysql -uroot -predhat
+or
+# mysql -u root -p
+
+Now, start the mysql server:
+****************************
+
+[root@masterdns ~]# systemctl start mariadb.service [RHEL-7 or CENTOS-7]
+
+[root@masterdns ~]# service mysqld start [4.x , 5.x & 6.x of RHEL or CENTOS]
+Initializing MySQL database:  Installing MySQL system tables...
+OK
+Filling help tables...
+OK
+
+To start mysqld at boot time you have to copy
+support-files/mysql.server to the right place for your system
+
+PLEASE REMEMBER TO SET A PASSWORD FOR THE MySQL root USER !
+To do so, start the server, then issue the following commands:
+
+/usr/bin/mysqladmin -u root password 'new-password'
+/usr/bin/mysqladmin -u root -h masterdns.fortunera.com password 'new-password'
+
+Alternatively you can run:
+/usr/bin/mysql_secure_installation
+
+which will also give you the option of removing the test
+databases and anonymous user created by default.  This is
+strongly recommended for production servers.
+
+See the manual for more instructions.
+
+You can start the MySQL daemon with:
+cd /usr ; /usr/bin/mysqld_safe &
+
+You can test the MySQL daemon with mysql-test-run.pl
+cd /usr/mysql-test ; perl mysql-test-run.pl
+
+Please report any problems with the /usr/bin/mysqlbug script!
+
+                                                           [  OK  ]
+Starting mysqld:                                           [  OK  ]
+
+
+To connect from windows do the below steps:
+*******************************************
+
+Step 1:
+*******
+
+[root@sivasoft html]# mysql -u root -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 6
+Server version: 5.1.73 Source distribution
+
+Copyright (c) 2000, 2013, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+Step 2:
+*******
+
+mysql> GRANT ALL ON *.* to root@'192.168.234.1' IDENTIFIED BY 'redhat';
+Query OK, 0 rows affected (0.00 sec)
+
+Step 3:
+*******
+
+mysql> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.00 sec)
+
+Step 4: Check the ports:
+************************
+
+[root@sivasoft html]# netstat -tulpn
+
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address               Foreign Address             State       PID/Program name
+tcp        0      0 192.168.234.150:3306        0.0.0.0:*                   LISTEN      4036/mysqld
+
+STEP 3:
+
+# mysql -u root -p
+
+mysql> show databases;
+
+mysql> use test;
+
+mysql> show tables;
+
+mysql> select * from users;
+
+mysql> create user keshav@localhost identified by 'redhat';
+
+mysql> grant insert,update,delete,select on test.* to keshav@localhost;
+
+To remove permissions:
+mysql> revoke select,update,delete,insert on test.xyz from keshav@localhost;
+
+mysql> show grants for keshav@localhost;
+
+mysql> flush privileges;
+
+Note:
+id	Name
+1	Networking
+2	Servers
+3	ssd
+
+mysql> 0
+
+mysql> insert into test.xyz(name,seller,phone_number)
+                    values ('HP','Joe Doe','91000');
+
+mysql> select * from test.xyz;
+
+mysql> exit;
+
+******************* SQL QUERIES ******************
+
+Syntax:
+
+Here is generic SQL syntax to create a MySQL table:
+
+CREATE TABLE table_name (column_name column_type);
+
+Now, we will create following table in amrita database.
+
+create table keshav_tbl(tutorial_id INT NOT NULL AUTO_INCREMENT,
+   tutorial_title VARCHAR(100) NOT NULL,
+   tutorial_author VARCHAR(40) NOT NULL,
+   submission_date DATE,
+   PRIMARY KEY ( tutorial_id )
+);
+
+Syntax:
+
+Here is generic SQL syntax of INSERT INTO command to insert data into MySQL table:
+
+INSERT INTO table_name ( field1, field2,...fieldN )
+                       VALUES
+                       ( value1, value2,...valueN );
+*******************************************************
+
+mysql> INSERT INTO keshav_tbl(tutorial_title, tutorial_author, submission_date) VALUES ("Learn PHP", "John Poul", NOW());
+
+************************************************
+
+Query the table:
+
+select * from db_name.table_name;
+
+select * from sunil.table_name;
