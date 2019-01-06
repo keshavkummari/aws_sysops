@@ -1,0 +1,125 @@
+
+
+AWS Elastic Beanstalk helps to quickly deploy and manage applications in the cloud without 
+having to worry about the instrastructure that runs those applications.
+
+EB reduces management complexity without restricting choice or control
+
+EB enables automated instrastructure management and code deployment, by simply uploading for applications and includes :
+
+
+1. Application Platform Managment
+2. Capacity Provisioning 
+3. Load Balancing
+4. AutoScaling
+5. Code Deployment
+6. Health Monitoring
+
+Once an application code is uploaded, EB automatically launches an environment, creates and configures the AWS resources needed to run the code.
+
+AWS resources launched by EB are fully accessible i.e. EC2 instance can be sshed into 
+
+Elastic Beanstalk provides developers and systems administrators an easy, fast way to deploy and manage the applications without having to worry about AWS instrastructure.
+
+Elastic Beanstalk Components:
+
+	1. Environments
+	2. Applications Versions
+	3. Saved Configurations
+
+Create Application(java code)>> Upload Version >> Launch Environment >> Manage Environment
+
+
+Static Website & Dynamic Website
+
+Full Stack Engineers/Developers :
+
+1. Client Side Scripting/Programming :
+	1. HTML
+	2. CSS
+	3. JavaScript
+	4. Ajax
+
+
+2. Server Side Scripting/Programming
+	1. Java or Python 
+	2. Build Tools : Java - Maven | Python - pip
+
+
+
+
+2 Tier Architecture :
+
+Hostname/DomainName : www.keshavkummari.com
+
+AWS Cloud :
+
+1. VPC
+	1. IGW
+	2. RTB
+	3. Subnets   : Public, Front End Private, & Backend Private Subnets
+	4. Nat Gateway
+	5. Bastion Server / JumpBox
+	6. NACL
+	7. Security Groups
+	8. RDS / Database
+	9. S3
+	10. Route53
+	11. EFS
+	12. ELB
+	13. Launch Configuration
+	14. AutoScaling 
+
+Front End Private Subnets : 
+	
+	1. Webserver Layer   :  EC2 Instance (i.e. Windows or Linux)
+	2. Application Layer :  EC2 Instance (i.e. Windows or Linux)
+
+& Backend Private Subnets
+	1. Database Self Managed or RDS
+	2. Backups(S3)
+
+
+Launch Configuration :
+
+
+STEP-9: Create Launch Configuration and security group i.e. SSH-HTTP-HTTPS-DB-ICMP
+
+1. OS Type : Linux Distribution : Amazon Linux 7.4
+
+Amazon Linux AMI 2018.03.0 (HVM), SSD Volume Type - ami-0ad42f4f66f6c1cc9
+The Amazon Linux AMI is an EBS-backed, AWS-supported image. The default image includes 
+
+Softwares:
+	1. AWS command line tools, 
+	2. Python, 
+	3. Ruby, 
+	4. Perl, and 
+	5. Java. 
+
+Repositrories :
+The repositories include 
+
+	1. Docker, 
+	2. PHP, 
+	3. MySQL, 
+	4. PostgreSQL, and 
+	5. other packages.
+
+
+# cat myuserdata.txt
+
+#!/bin/bash
+cd /opt/
+yum install wget* curl* vim* unzip* -y
+yum update -y
+wget https://www.free-css.com/assets/files/free-css-templates/download/page231/bizexpress-v1.0.1.zip
+unzip *.zip
+cd Biz*
+yum install http* --skip-broken -y
+mv * /var/www/html/
+service httpd start
+# systemct start httpd.service
+
+
+
