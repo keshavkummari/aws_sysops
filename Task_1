@@ -1,0 +1,68 @@
+AWS SysOps Administrator- Associate Project – Recreation Domain: Recreation
+
+DESCRIPTION
+
+Your development team has asked you to create a small Linux instance and deploy a PHP application to it. 
+
+Prerequisites to run the application are apache (httpd) + mod_php. 
+
+
+Application is uploaded to an S3 bucket. 
+
+
+A few days later, after tests are successfully performed, the development team asks you to deploy the application to a secure, load balanced environment.
+
+#---------------------------------------------------------#
+STEP-1 : Write PHP Code 
+
+STEP-2 : Code Should Versioned i.e. Github  or S3
+
+STEP-3 : Create a VPC(Default or Custom)  & Resources
+
+STEP-4 : EC2 instance of Linux/Windows 
+
+STEP-5 : Install Apache WebServer i.e. httpd
+
+STEP-6 : Deploy the PHP code from github on DocumentRoot i.e. /var/www/html
+
+STEP-7 : Test the Application using WebBrowser 
+
+STEP-8 : Create HostedZone part of Route53 (keshavkummari.com) :
+			- NS
+			- SOA
+			- A  
+			Note : Create A Record & Copy the NS and update under Domain Register
+
+STEP-9  : Load Balancer & Update the Route53 A record 
+
+STEP-10 : Create a Centralized Storage for Code Deployment i.e. EFS
+
+STEP-11 : Create Launch Configuration (Write the Script)
+
+STEP-12 : Create AutoScaling : 2 
+			- Increasing Group : >=80 (1-5) add 1 server
+			- Decreasing Group : <=40 (1-5) remove 1 server
+
+STEP-13 : Test and Validate the Application by going to Various Browsers 
+#---------------------------------------------------------#
+
+Launch Configuration Script: 
+
+#!/bin/bash
+yum update -y
+yum install vim* curl* wget* unzip* nfs* -y
+yum install http* --skip-broken -y
+service httpd start
+chkconfig httpd on
+
+sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-4463510f.efs.us-east-1.amazonaws.com:/ /var/www/html/
+
+service httpd restart
+
+wget https://www.free-css.com/assets/files/free-css-templates/download/page231/bizexpress-v1.0.1.zip
+unzip *.zip
+cd Biz*
+mv * /var/www/html/
+
+service httpd restart
+
